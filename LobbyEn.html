@@ -11,9 +11,14 @@
     <body class="darkMode">
         <a href="ProtoEn.html">Exit</a>
         <div>
-        <h1 class="titulos" id="tloby">WAITING OTHER PLAYERS</h1>
+        <h1 class="titulos" id="loby">WAITING OTHER PLAYERS</h1>
         </div>
         <div class="container" id="jugadores">
+            <select class="2" id="variantes">
+            <option selected>Choose a board</option>
+            <option value="1"></option>
+            <option value="2"></option>
+            </select>
             <div class="row distance">
                 <img src="1.jpg" id="jugador" class="rounded-circle usuario"><label class="colorText col-2">player 1</label>
                 <input type="checkbox" class="btn-check distance col-4" id="listo1" autocomplete="off">
@@ -28,7 +33,7 @@
                 <img src="1.jpg" id="jugador" class="rounded-circle usuario"><label class="colorText col-2">palyer 3</label>
                 <input type="checkbox" class="btn-check distance col-4" id="listo3" autocomplete="off">
                 <label class="btn btn-outline-success col-4" for="listo3">¡READY!</label>
-                <a href="#" class="btn btn-outline-warning col-3" role="button" id="inicio">¡¡START!!</a>
+                <a href="PartidaEn.html" class="btn btn-outline-warning col-3" role="button" id="inicio">¡¡START!!</a>
             </div>
             <div class="row distance">
                 <img src="1.jpg" id="jugador" class="rounded-circle usuario"><label class="colorText col-2">player 4</label>
