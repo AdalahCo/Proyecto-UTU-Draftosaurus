@@ -1,0 +1,158 @@
+.darkMode{ /*Clase para que el color de fondo del body sea oscuro*/
+    background-color: rgb(43, 43, 43)
+}
+.usuario{ /*Clase para cada vez que se necesite una version pequeña de la foto del usuario*/
+    height: 75px;
+    width: 75px;
+
+}
+.colorText{ /*Clase para que los textos sean legibles en el modo oscuro*/
+    color:rgb(13, 110, 253);
+}
+.distance{ /*Clase utilizada en el lobby para poner distancia entre usuarios*/
+    margin-top: 10px;
+}
+.titulos{/*Clase temporal para los titulos que no sean el nombre del juego*/
+    color:aqua;
+    text-align: center;
+    margin-right: 20%;
+}
+
+#title{ /*Remplazo temporal para el titulo principal*/
+    position: relative;
+    text-align: center;
+    margin-left: 13.6%;
+    color: aqua;
+}
+#navegador{/*Etiqueta del navegador que se halla en el menu principal*/
+    height: 300px;
+    margin-top: 200px;
+    text-align: center;
+    align-items: center;
+}
+
+#boton{ /*Etiqueta del boton que dirige a la pestaña del usuario (por ahora se halla en el menu principal)*/
+    position:absolute;
+    margin-left: 15%;
+}
+#pies{ /*Etiqueta del footer (por ahora se halla unicamente en el menu principal)*/
+    position:absolute;
+    height: 210px;
+    bottom: 0;
+}
+#introduccion{ /*Etiqueta del div que contiene un breve resumen del juego y su origen, se halla en reglas*/
+    background-color: blueviolet;
+    font-size: 25px;
+    height: 400px;
+    width: 500px;
+}
+#instrumentos{ /*Etiqueta del div que contiene los objetos necesesarios para jugar, se halla en reglas*/
+    background-color:blanchedalmond;
+    font-size: 25px;
+    height: 180px;
+    width: 500px;
+    margin-left: 66%;
+}
+#fotosuperepicadeltablero{ /*Etiqueta del div donde va a ir la Foto Super Epica Del Tablero, se halla en reglas*/
+    position: absolute;
+    background-color:aquamarine;
+    height: 400px;
+    width: 500px;
+    margin-left: -143px;
+}
+#explicaciontablero{ /*Etiqueta del div en el que iria un explicacion de las casillas del tablero, se halla en reglas*/
+    background-color: silver;
+    height: 400px;
+    width: 500px;
+    margin-left: 72.6%;
+    margin-top: 55.5px;
+}
+#comojugar{ /*Etiqueta del div en el cual iria una explicacion de como jugar junto a las reglas, evidentemente se halla en reglas*/
+    background-color: rgb(115, 255, 0);
+    height: 400px;
+    width: 500px;
+    margin-top: 55.5px;
+}
+#idiomaI{ /*Etiqueta de la foto que respresenta el idioma ingles, se halla en configuracion*/
+    height: 75px;
+    width: 75px;
+}
+#idiomaE{ /*Etiquita de la foto que representa el idioma español, se halla en configuracion*/
+    height: 75px;
+    width: 75px;
+}
+#variantes{ /*Etiqueta del select en el que se elije el tipo de tablero, se halla en lobby*/
+    margin-left: 30%;
+}
+#jugadores{ /*Etiqueta del div en el que esta la lista de jugadores esperando en el lobby, se halla en lobby*/
+    background-color: rgb(105, 56, 20);
+}
+#inicio{ /*Etiqueta del boton de iniciar la partida, se halla en lobby*/
+    margin-left: 10%;
+}
+#tablero{ /*Etiqueta de la foto del tablero utilizado en el juego, se halla en partida*/
+    position:absolute;
+    height: 100%;
+    width: 70%;
+
+}
+#filasuperior{ /*Etiqueta del select izquierdo en la fila superior de las casillas del tablero, se halla en partida*/
+    position: relative;
+    margin-top: 100px;
+    margin-left: 80px;
+    width: 200px;
+}
+#filasuperior2{ /*Etiqueta del select derecho en la fila superior de las casillas del tablero, se halla en partida*/
+    position: relative;
+    margin-top: 100px;
+    margin-left: 400px;
+    width: 110px;
+}
+#filamedio{ /*Etiqueta del select izquierdo en la fila media de las casillas del tablero, se halla en partida*/
+    position: relative;
+    margin-top: 200px;
+    margin-left: 85px;
+    width: 110px;
+}
+#filamedio2{ /*Etiqueta del select derecho en la fila media de las casillas del tablero, se halla en partida*/
+    position: relative;
+    margin-top: 220px;
+    margin-left: 430px;
+    width: 120px;
+}
+#filabajo{ /*Etiqueta del select derecho en la fila baja de las casillas del tablero, se halla en partida*/
+    position: relative;
+    margin-top: 110px;
+    margin-left: 240px;
+    height: 30px;
+}
+#cantidad{ /*Etiqueta del input el cual indica el numero de dinosaurios, se encuntra a la derecha de filasuperior en partida*/
+     position: relative;
+    margin-top: 82px;
+    margin-left: 15px;
+    width: 70px;
+}
+#cantidad2{ /*Etiqueta del input el cual indica el numero de dinosaurios, se encuntra a la derecha de filamedio en partida*/
+     position: relative;
+    margin-top: 244px;
+    margin-left: 15px;
+    width: 70px;
+}
+#cantidad3{ /*Etiqueta del input que indica el numero de parejas, se encuentra en la fila baja en partida*/
+       position: relative;
+    margin-top: 150px;
+    margin-left: 200px;
+    width: 120px;
+    height: 90;
+}
+#cantidad4{ /*Etiqueta del input que indica el numero de dinosaurios en el rio, se encuentra en la fila baja en partida*/
+     position: relative;
+    margin-top: 190px;
+    margin-left: 270px;
+    width: 70px;
+}
+#fin{ /*Etiqueta del boton que finaliza la partida, se halla en partida*/
+    position: absolute;
+    margin-left: 70%;
+    margin-top: 23%;
+}
