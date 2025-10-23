@@ -1,0 +1,61 @@
+.bg{ /*Clase para que el color de fondo del body sea oscuro*/
+    background-image: url(../img/userbg.jpg);
+    background-position: center center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+.colorText{ /*Clase para que los textos sean legibles en el modo oscuro*/
+    color:rgb(13, 110, 253);
+}
+#backarw{
+    position:absolute;
+    max-width: 7.5%;
+    top: 0;
+    left: 0;
+    padding: 5px;
+}
+#backarwSM{
+    position:absolute;
+    max-width: 25%;
+    top: 0;
+    left: 0;
+    padding: 5px;
+}
+#page{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 25%;
+    padding-top:2%;
+    z-index: -1;
+}
+#pageSM{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 75%;
+    padding-top:25%;
+    z-index: -1;
+}
+#pfp{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+#pfpSM{
+    display: block;
+    min-width: 40%;
+    margin-left: auto;
+    margin-right: auto;
+}
+#fix{
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -150%);
+    text-align:center;
+    z-index:1;
+}
+.fixSM{
+    font-size:300%;
+}

@@ -1,0 +1,85 @@
+.bg{ /*background*/
+    background-image: url(../img/mainbg.jpg);
+    background-position: center center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+.usuario{ /*sets width and height for user at top right*/
+    height: 75px;
+    width: 75px;
+}
+#titleimg{ /*sets all variables to do with the title image*/
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 75%;
+    padding-top:2%;
+}
+#titleimgbig{ /*title, but big, for small screens*/
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+    padding-top:2%;
+}
+.distance{ /*idk what this is it was on the original code and some stuff moves around with it and im too lazy to check but it works for like spacing n stuff*/
+    margin-top: 10px;
+}
+#toprightfix{ /*fixes user at top right*/
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 15px;
+}
+#footer{ /*puts footer at bottom left*/
+    position:absolute;
+    height: 25%;
+    bottom: 1%;
+    left:0.1%;
+}
+#footerSmall{ /*footer, but in the middle bottom and smaller for smaller screens*/
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height: 25%;
+    bottom: 1%;
+    max-width: 40%;
+    height:auto;
+}
+#rbtn-l{
+    margin-left: 50%;
+    margin-right: auto;
+    display: block;
+    max-width: 50%;
+    transition: transform 0.3s ease-in-out;
+}
+#rbtn{
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    max-width: 50%;
+    transition: transform 0.3s ease-in-out;
+}
+#rbtn-sm{
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    min-width:fit-content;
+    padding:15%;
+}
+#rbtn-r{
+    margin-left: auto;
+    margin-right: 50%;
+    display: block;
+    max-width: 50%;
+    transition: transform 0.3s ease-in-out;
+}
+#rbtn-l:hover {
+  transform: scale(1.1); 
+}
+#rbtn:hover {
+  transform: scale(1.1); 
+}
+#rbtn-r:hover {
+  transform: scale(1.1); 
+}

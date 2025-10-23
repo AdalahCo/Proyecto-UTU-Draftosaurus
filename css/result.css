@@ -1,0 +1,52 @@
+.bg{
+    background-image: url(../img/cavebg.png);
+    background-position: center center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+#backarw{
+    position:absolute;
+    max-width: 7.5%;
+    top: 0;
+    left: 0;
+    padding: 5px;
+}
+#backarwSM{
+    position:absolute;
+    max-width: 25%;
+    top: 0;
+    left: 0;
+    padding: 5px;
+}
+.colorText{ /*Clase para que los textos sean legibles en el modo oscuro*/
+    color:white;
+    z-index: 1;
+}
+#shift{
+    transform: translate(43%, -387.5%);
+    transform-origin: center center;
+}
+#shiftSM{
+    transform: translate(45%, -387.5%);
+    transform-origin: center center;
+}
+#block{
+    padding-top:18%;
+    display: block;
+    margin: auto;
+    max-width: 50%;
+    z-index: -1;
+}
+#blockSM{
+    padding-top:60%;
+    display: block;
+    margin: auto;
+    z-index: -1;
+}
+#just{
+    display: flex;
+    justify-content: center;
+}
+.big{
+    font-size:300%;
+}

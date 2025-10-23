@@ -1,0 +1,40 @@
+<!Doctype html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>Prototipo UI Draftosaurus</title>
+    </head>
+    <header>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/main.css">
+    </header>
+    <body class="bg">
+        <div class = "container">
+            <div class ="row-5">
+                <div> <!-- d-none d-lg-block hace que no aparezca la imagen si no es mas largo que lg -->
+                    <h1 id="title" class="d-none d-lg-block"><img src="img/draftlogo.png" id="titleimg"></h1> <!-- imagen temporal hasta que haga un diseño mejor junto a utulab si es posible -->
+                    <h1 id="title" class="d-lg-none"><img src="img/draftlogo.png" id="titleimgbig"></h1> <!-- imagen temporal hasta que haga un diseño mejor junto a utulab si es posible -->
+                </div> <!-- d-lg-none hace que no aparezca la imagen si es igual o mas largo que lg -->
+                <div class = "col-1">
+                    <button type="button" class="border rounded-circle" id="toprightfix"><a href="html/user.html"><img src="img/foto.jpg" class="rounded-circle usuario"></a></button>
+                </div>
+            </div>
+        </div>
+            <nav id="nav" class="row">
+                <div class="col-sm-4 d-none d-lg-block">
+                <ul><a href="html/config.html"><button type="button" class="btn btn-outline-warning"><img src="img/btnsettings.png" id="rbtn-l"></button></a></ul>
+                </div><div class="col-sm-4 d-none d-lg-block">
+                <ul><a href="html/lobby.html"><button type="button" class="btn btn-outline-warning"><img src="img/btnplay.png" id="rbtn"></button></a></ul>
+                </div><div class="col-sm-4 d-none d-lg-block">
+                <ul><a href="html/rules.html"><button type="button" class="btn btn-outline-warning"><img src="img/btnrules.png" id="rbtn-r"></button></a></ul>
+                </div>
+                <ul><a href="html/config.html"><button type="button" class="btn btn-outline-warning col-3 d-lg-none" id="rbtn-sm"><img src="img/btnsettings.png" id="rbtn"></button></a></ul>
+                <ul><a href="html/lobby.html"><button type="button" class="btn btn-outline-warning col-3 d-lg-none" id="rbtn-sm"><img src="img/btnplay.png" id="rbtn"></button></a></ul>
+                <ul><a href="html/rules.html"><button type="button" class="btn btn-outline-warning col-3 d-lg-none" id="rbtn-sm"><img src="img/btnrules.png" id="rbtn"></button></a></ul>
+            </nav>
+        <footer>
+            <img src="img/Logofoot.png" id="footer" class="d-none d-lg-block">
+            <img src="img/Logofoot.png" id="footerSmall" class="d-lg-none">
+        </footer>
+    </body>
+</html>

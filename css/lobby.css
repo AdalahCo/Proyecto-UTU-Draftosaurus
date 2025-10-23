@@ -1,0 +1,105 @@
+.bg{
+    background-image: url(../img/cavebg.png);
+    background-position: center center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+#backarw{
+    position:absolute;
+    max-width: 7.5%;
+    top: 0;
+    left: 0;
+    padding: 5px;
+}
+#backarwSM{
+    position:absolute;
+    max-width: 25%;
+    top: 0;
+    left: 0;
+    padding: 5px;
+}
+.usuario{
+    height: 75px;
+    width: 75px;
+}
+.usuarioSM{ /*Clase para cada vez que se necesite una version pequeña de la foto del usuario*/
+    height: 75px;
+    width: 75px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.colorText{ /*Clase para que los textos sean legibles en el modo oscuro*/
+    color:white;
+}
+#navegador{/*Etiqueta del navegador que se halla en el menu principal*/
+    height: 300px;
+    margin-top: 200px;
+    text-align: center;
+    align-items: center;
+}
+#slctMap{ /*Etiqueta del select en el que se elije el tipo de tablero, se halla en lobby*/
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+#slctMapSM{ /*Etiqueta del select en el que se elije el tipo de tablero, se halla en lobby*/
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    transform: scale(1.75);
+}
+#inicio{ /*Etiqueta del boton de iniciar la partida, se halla en lobby*/
+    margin-left: 10%;
+}
+#inicioSM{ /*Etiqueta del boton de iniciar la partida, se halla en lobby*/
+    margin-left: 0.01%;
+    margin-top:50%;
+}
+.rowSpace {
+  height: 180px; /* adjusts as needed */
+}
+.rowSpaceSmall {
+  height: 100px; /* adjusts as needed but smaller */
+}
+.rowSpaceSmallSM {
+  height: 200px; /* adjusts as needed but smaller */
+}
+#sp{
+    padding-top:60%;
+}
+#menu{
+    position:relative;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top:5%;
+    z-index:-1;
+}
+#menuSM{
+    position:relative;
+    min-width:70%;
+    margin-left: 14%;
+    margin-right: auto;
+    padding-top:15%;
+    z-index:-1;
+}
+#menuTransf{
+    transform: scale(0.75);
+}
+#menuTransfSM{
+    transform: scale(1.05);
+}
+#menuDiv{
+    transform: translate(0%, -87.5%);
+    transform-origin: center center;
+}
+#menuDivSM{
+    transform: translate(0%, -150%);
+    transform-origin: center center;
+}
+#center{
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    
+}
