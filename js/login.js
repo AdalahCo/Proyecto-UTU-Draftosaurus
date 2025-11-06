@@ -23,7 +23,7 @@ class ApiUser {
 }
 
 // Se crea una instancia de ApiUser con la URL de la API local
-const api = new ApiUser("http://localhost\Proyecto-UTU-Draftosaurus\php\api/");
+const api = new ApiUser("../php/api/index.php");
 
 // Se obtiene el elemento del DOM donde se mostrarán los resultados
 const nameOutput = document.getElementById("nameInput");
@@ -35,18 +35,12 @@ const loginPass = prompt("Ingrese su contraseña:");
 // Si el usuario ingresó un valor
 if (loginGmail) {
     // Llama al método getById de la API con el ID proporcionado
-    api.getById(loginGmail).then
-        // Si se encontró un loginGmail válido (tiene id_animal)
-        if (loginGmail && loginGmail.gmail) {
-            // Muestra la información del loginGmail en formato HTML estilizado
-            nameOutput.innerHTML = `
-                    <h2 style="margin-top:0;">${loginGmail.nombre}</h2>
-            `;
-            gmailOutput.innerHTML = `
-                    <h2 style="margin-top:0;">${loginGmail.gmail}</h2>
-            `;
+    api.getById(loginGmail).then(loginData => {
+        if (loginData && loginData.gmail) {
+            nameOutput.innerHTML = `<h2>${loginData.nombre}</h2>`;
+            gmailOutput.innerHTML = `<h2>${loginData.gmail}</h2>`;
         } else {
-            // Si no se encontró el loginGmail, muestra un mensaje de error
             nameOutput.innerHTML = `<p>No se encontró el usuario con gmail ${loginGmail}.</p>`;
         }
-    };
+    })
+};

@@ -5,7 +5,6 @@ const DB_HOST = 'localhost'; // Dirección del servidor de base de datos (normal
 const DB_NAME = 'accounts'; // Nombre de la base de datos a la que queremos conectarnos
 const DB_USER = 'root'; // Usuario de la base de datos (por defecto en XAMPP suele ser 'root')
 const DB_PASS = ''; // Contraseña del usuario de la base de datos (en XAMPP suele estar vacía)
-$con = mysqli_connect();
 
 // Definimos una clase llamada Database para manejar la conexión a la base de datos
 class Database {

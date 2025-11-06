@@ -32,7 +32,7 @@ class User {
         // Preparamos la consulta usando la conexión a la base de datos
         $stmt = $this->conn->prepare($query);
         // Asociamos el valor recibido en $id al marcador ':id' en la consulta, asegurando que sea un entero
-        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+        $stmt->bindParam(":id", $id, PDO::PARAM_STR);
         // Ejecutamos la consulta preparada
         $stmt->execute();
         // Obtenemos el resultado como un array asociativo (solo un registro) y lo devolvemos
