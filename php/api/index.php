@@ -1,4 +1,7 @@
 <?php
+
+session_start();
+
 header("Content-Type: application/json; charset=UTF-8");
 // Establece el tipo de contenido de la respuesta a JSON y el juego de caracteres a UTF-8
 
@@ -23,22 +26,7 @@ $user = new User($db);
 // Obtiene el método HTTP de la petición (por ejemplo, GET, POST, etc.)
 $method = $_SERVER['REQUEST_METHOD'];
 
-// Si el método es GET, se procesan las peticiones para obtener datos
-if ($method === 'GET') {
-    // Si se ha pasado un parámetro 'id' por la URL, se busca un user por su id
-    if (isset($_GET['id'], $_GET['password'])) {
-        // Llama al método getById() de la clase Animal, pasando el id recibido
-        $data = $user->login($_GET['id'], $_GET['password']);
-        // Si se encuentra el user, se devuelve en formato JSON; si no, se devuelve un mensaje de error
-        echo json_encode($data ? $data : ["mensaje" => "Animal no encontrado"]);
-    } else {
-        // Si no se pasa un id, se obtienen todos los animales llamando a getAll()
-        $data = $user->getAll();
-        // Devuelve la lista de animales en formato JSON
-        echo json_encode($data);
-    }
-// Si el método no es GET, checkea si es POST, si no, se devuelve un mensaje de error indicando que el método no está permitido
-} elseif ($method === 'POST') {
+if ($method === 'POST') {
     $data = json_decode(file_get_contents("php://input"), true);
 
     if (isset($data['gmail']) && isset($data['contraseña'])) {
@@ -47,17 +35,22 @@ if ($method === 'GET') {
         $userData = $user->login($gmail, $password);
 
         if ($userData) {
-            echo json_encode($userData);
-            exit;
+            $_SESSION['user'] = $userData;
+            echo json_encode(["success" => true, "user" => $userData]);
         } else {
-            echo json_encode(["error" => "Info incorrecta"]);
-            exit;
+            echo json_encode(["error" => "Informacion incorrecta"]);
         }
     } else {
         echo json_encode(["error" => "Faltan datos"]);
     }
 
+} elseif ($method === 'GET') {
+    if (isset($_SESSION['user'])) {
+        echo json_encode(["logged" => true, "user" => $_SESSION['user']]);
+    } else {
+        echo json_encode(["logged" => false]);
+    }
+
 } else {
     echo json_encode(["error" => "Método no permitido"]);
 }
-?>
