@@ -56,4 +56,17 @@ class User {
         }
     }
 
+    public function updateLang($gmail, $lang) {
+    $query = "UPDATE {$this->table} SET lang = :lang WHERE gmail = :gmail";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(":lang", $lang);
+    $stmt->bindParam(":gmail", $gmail);
+
+    if ($stmt->execute()) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 }

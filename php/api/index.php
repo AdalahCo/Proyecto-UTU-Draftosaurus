@@ -68,6 +68,25 @@ if ($method === 'POST') {
     session_destroy();
     echo json_encode(["logout" => true]);
 
+} elseif ($method === 'PUT') {
+    $data = json_decode(file_get_contents("php://input"), true);
+
+    if (isset($_SESSION['user'])) {
+        $gmail = $_SESSION['user']['gmail'];
+        $lang = $data['lang'] ?? null;
+
+        if ($lang) {
+            if ($user->updateLang($gmail, $lang)) {
+                // Actualizamos también el valor en la sesión actual
+                $_SESSION['user']['lang'] = $lang;
+                echo json_encode(["success" => true, "lang" => $lang]);
+            } else {
+                echo json_encode(["error" => "No se pudo actualizar el idioma."]);
+            }
+        } else {
+            echo json_encode(["error" => "No se especificó idioma."]);
+        }
+    }
 } else {
     echo json_encode(["error" => "Método no permitido"]);
 }
