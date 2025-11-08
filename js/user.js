@@ -1,5 +1,5 @@
-const nameOutput = document.getElementById("nameInput");
-const gmailOutput = document.getElementById("gmailInput");
+const nameOutputs = document.querySelectorAll(".nameInput");
+const gmailOutputs = document.querySelectorAll(".gmailInput");
 const submit = document.getElementById("logout");
 
 fetch("../php/api/index.php", {
@@ -10,8 +10,12 @@ fetch("../php/api/index.php", {
 .then(data => {
   if (!data.logged) window.location.href = "login.html";
   else console.log("Usuario logueado:", data.user);
-  nameOutput.innerHTML = `<h2>${data.user.nombre}</h2>`;
-  gmailOutput.innerHTML = `<h2>${data.user.gmail}</h2>`;
+    nameOutputs.forEach(el => {
+      el.innerHTML = `<h2>${data.user.nombre}</h2>`;
+    });
+    gmailOutputs.forEach(el => {
+      el.innerHTML = `<h2>${data.user.gmail}</h2>`;
+    });
 });
 
 submit.addEventListener("click", (e) => {

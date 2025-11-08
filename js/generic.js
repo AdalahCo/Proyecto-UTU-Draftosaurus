@@ -11,7 +11,7 @@ const traducciones = {
     ph_mail: "Correo electrónico",
     ph_pass: "Contraseña",
     login: "Iniciar sesión",
-    botonSalir: "Cerrar sesión",
+    logout: "Cerrar sesión",
   },
   en: {
     ruleTitle: "Rules",
@@ -25,7 +25,7 @@ const traducciones = {
     ph_pass: "Password",
     regTitle: "Register",
     login: "Log-In",
-    botonSalir: "Log-out",
+    logout: "Log-Out",
   }
 };
 
@@ -52,8 +52,9 @@ fetch("../php/api/index.php", {
 })
 .then(res => res.json())
 .then(data => {
-  if (!data.logged) window.location.href = "login.html";
-  else {
+  if (!data.logged && !window.location.pathname.includes("login")) {
+    window.location.href = "login.html";
+  } else {
     console.log("Usuario logueado:", data.user);
     aplicarIdioma(data.user.lang || "es");
   }
