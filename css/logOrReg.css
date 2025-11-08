@@ -1,0 +1,63 @@
+.bg{ /*background*/
+    background-image: url(../img/mainbg.jpg);
+    background-position: center center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+.distance{ /*idk what this is it was on the original code and some stuff moves around with it and im too lazy to check but it works for like spacing n stuff*/
+    margin-top: 10px;
+}
+#backarw{
+    position:absolute;
+    max-width: 7.5%;
+    top: 0;
+    left: 0;
+    padding: 5px;
+}
+#backarwSM{
+    position:absolute;
+    max-width: 15%;
+    top: 0;
+    left: 0;
+    padding: 5px;
+}
+#rbtn-l{
+    margin-left: 50%;
+    margin-right: auto;
+    display: block;
+    max-width: 50%;
+    transition: transform 0.3s ease-in-out;
+    top:50%;
+}
+.top{
+    margin-top: auto;
+    margin-bottom: auto;
+}
+#rbtn-sm{
+    scale:70%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    min-width:fit-content;
+    padding:15%;
+}
+#rbtn{
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    max-width: 50%;
+    transition: transform 0.3s ease-in-out;
+}
+#rbtn-r{
+    margin-left: auto;
+    margin-right: 50%;
+    display: block;
+    max-width: 50%;
+    transition: transform 0.3s ease-in-out;
+}
+#rbtn-l:hover {
+  transform: scale(1.1); 
+}
+#rbtn-r:hover {
+  transform: scale(1.1); 
+}
