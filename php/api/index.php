@@ -29,6 +29,20 @@ $method = $_SERVER['REQUEST_METHOD'];
 if ($method === 'POST') {
     $data = json_decode(file_get_contents("php://input"), true);
 
+    if (isset($data['action']) && $data['action'] === 'register') {
+        if (isset($data['gmail'], $data['nombre'], $data['contraseña'])) {
+            $gmail = $data['gmail'];
+            $nombre = $data['nombre'];
+            $password = $data['contraseña'];
+
+            $result = $user->register($gmail, $nombre, $password);
+            echo json_encode($result);
+        } else {
+            echo json_encode(["error" => "Faltan datos"]);
+        }
+        exit;
+    }
+    
     if (isset($data['gmail']) && isset($data['contraseña'])) {
         $gmail = $data['gmail'];
         $password = $data['contraseña'];

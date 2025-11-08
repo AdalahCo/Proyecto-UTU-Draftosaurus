@@ -11,20 +11,6 @@ class User {
         $this->conn = $db;
     }
 
-    // Método para obtener todos los registros de users de la base de datos
-    public function getAll() {
-        // Creamos la consulta SQL para seleccionar los campos deseados de la tabla 'users'
-        $query = "SELECT `gmail`, `nombre`, `contraseña`, `lang` FROM {$this->table}";
-        // Preparamos la consulta usando la conexión a la base de datos para evitar inyecciones SQL
-        $stmt = $this->conn->prepare($query);
-        // Ejecutamos la consulta preparada
-        $stmt->execute();
-        // Obtenemos todos los resultados como un array asociativo y lo devolvemos
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-        // Parte de abajo DEFAULT sin usar por ahora por las dudas no tocar
-
     // Método para obtener un animal específico por su ID
     public function login($gmail, $password) {
         $query = "SELECT gmail, nombre, contraseña, lang FROM {$this->table} WHERE gmail = :gmail";
@@ -46,4 +32,28 @@ class User {
         }
         return $user;
     }
+
+    public function register($gmail, $nombre, $password) {
+        // Verifica si ya existe un usuario con ese correo
+        $query = "SELECT gmail FROM {$this->table} WHERE gmail = :gmail";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":gmail", $gmail);
+        $stmt->execute();
+        if ($stmt->fetch(PDO::FETCH_ASSOC)) {
+            return ["error" => "El correo ya esta registrado"];
+        }
+
+        $insert = "INSERT INTO {$this->table} (gmail, nombre, contraseña) VALUES (:gmail, :nombre, :password)";
+        $stmt = $this->conn->prepare($insert);
+        $stmt->bindParam(":gmail", $gmail);
+        $stmt->bindParam(":nombre", $nombre);
+        $stmt->bindParam(":password", $password);
+
+        if ($stmt->execute()) {
+            return ["success" => true];
+        } else {
+            return ["error" => "Error al registrar el usuario"];
+        }
+    }
+
 }

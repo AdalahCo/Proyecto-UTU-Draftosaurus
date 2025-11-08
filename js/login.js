@@ -47,11 +47,11 @@ submit.addEventListener("submit", (e) => {
     api.login(loginGmail, loginPass)
     .then(loginData => {
         if (loginData && loginData.success && loginData.user) {
-                window.location.href = "user.html";
+            window.location.href = "user.html";
         } else {
             mensaje.innerHTML = `<p>${loginData.error || "Información incorrecta."}</p>`;
         }
-            console.log("Respuesta del servidor:", loginData);
+        console.log("Respuesta del servidor:", loginData);
         })
         .catch(err => {
             console.error("Error en el login:", err);
