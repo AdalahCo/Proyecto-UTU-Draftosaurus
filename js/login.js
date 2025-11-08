@@ -14,11 +14,13 @@ class ApiUser {
         }
 
     // Método para obtener un loginGmail por su ID
-    getById(id) {
-        // Realiza una petición fetch a la URL base agregando el parámetro id
-        return fetch(`${this.baseUrl}?id=${id}`)
-            // Convierte la respuesta a JSON
-            .then(response => response.json());
+    login(gmail, password) {
+        return fetch(this.baseUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ gmail: gmail, contraseña: password })
+        })
+        .then(response => response.json());
     }
 }
 
@@ -26,21 +28,35 @@ class ApiUser {
 const api = new ApiUser("../php/api/index.php");
 
 // Se obtiene el elemento del DOM donde se mostrarán los resultados
-const nameOutput = document.getElementById("nameInput");
-const gmailOutput = document.getElementById("gmailInput");
+const mensaje = document.getElementById("mensaje");
 
-const loginGmail = prompt("Ingrese su Gmail:");
-const loginPass = prompt("Ingrese su contraseña:");
+const submit = document.getElementById("formRegistro");
 
-// Si el usuario ingresó un valor
-if (loginGmail) {
-    // Llama al método getById de la API con el ID proporcionado
-    api.getById(loginGmail).then(loginData => {
-        if (loginData && loginData.gmail) {
-            nameOutput.innerHTML = `<h2>${loginData.nombre}</h2>`;
-            gmailOutput.innerHTML = `<h2>${loginData.gmail}</h2>`;
-        } else {
-            nameOutput.innerHTML = `<p>No se encontró el usuario con gmail ${loginGmail}.</p>`;
-        }
-    })
-};
+submit.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const loginGmail = document.getElementById("correo").value.trim();
+    const loginPass = document.getElementById("contraseña").value.trim();
+
+    if (!loginGmail || !loginPass) {
+        mensaje.innerHTML = `<p style="color:red;">Por favor, complete ambos campos.</p>`;
+        return;
+    }
+
+    api.login(loginGmail, loginPass)
+        .then(loginData => {
+            if (loginData && loginData.gmail) {
+                mensaje.innerHTML = `
+                    <p style="color:green;">¡Bienvenido, ${loginData.nombre}!</p>
+                    <p>Correo: ${loginData.gmail}</p>
+                `;
+            } else {
+                mensaje.innerHTML = `<p>${loginData.error || "Informacion incorrecta."}</p>`;
+            }
+            console.log("Respuesta del servidor:", loginData);
+        })
+        .catch(err => {
+            console.error("Error en el login:", err);
+            mensaje.innerHTML = `<p>Error de conexión al servidor.</p>`;
+        });
+});
