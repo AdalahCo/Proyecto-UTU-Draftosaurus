@@ -37,6 +37,7 @@ submit.addEventListener("submit", (e) => {
 
     const loginGmail = document.getElementById("correo").value.trim();
     const loginPass = document.getElementById("contraseña").value.trim();
+    const mensaje = document.getElementById("mensaje");
 
     if (!loginGmail || !loginPass) {
         mensaje.innerHTML = `<p style="color:red;">Por favor, complete ambos campos.</p>`;
@@ -44,15 +45,12 @@ submit.addEventListener("submit", (e) => {
     }
 
     api.login(loginGmail, loginPass)
-        .then(loginData => {
-            if (loginData && loginData.gmail) {
-                mensaje.innerHTML = `
-                    <p style="color:green;">¡Bienvenido, ${loginData.nombre}!</p>
-                    <p>Correo: ${loginData.gmail}</p>
-                `;
-            } else {
-                mensaje.innerHTML = `<p>${loginData.error || "Informacion incorrecta."}</p>`;
-            }
+    .then(loginData => {
+        if (loginData && loginData.success && loginData.user) {
+                window.location.href = "user.html";
+        } else {
+            mensaje.innerHTML = `<p>${loginData.error || "Información incorrecta."}</p>`;
+        }
             console.log("Respuesta del servidor:", loginData);
         })
         .catch(err => {

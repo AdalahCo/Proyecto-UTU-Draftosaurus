@@ -50,6 +50,9 @@ if ($method === 'POST') {
     } else {
         echo json_encode(["logged" => false]);
     }
+} elseif ($method === 'DELETE') {
+    session_destroy();
+    echo json_encode(["logout" => true]);
 
 } else {
     echo json_encode(["error" => "Método no permitido"]);
