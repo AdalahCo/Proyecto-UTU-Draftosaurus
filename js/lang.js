@@ -19,11 +19,6 @@ function cambiarIdioma(newLang) {
     .then(res => res.json())
     .then(data => {
         console.log("Respuesta del servidor:", data);
-        if (data.success) {
-            alert(`Idioma actualizado a ${data.lang}`);
-        } else {
-            alert(data.error || "Error al actualizar idioma");
-        }
     })
     .catch(err => console.error("Error al conectar:", err));
 }
