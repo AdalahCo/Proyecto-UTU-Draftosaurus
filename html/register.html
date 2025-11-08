@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrar</title>
+    <title data-key="regTitle">Registrar</title>
 </head>
 <body>
-    <h1>Registrar</h1>
+    <h1 data-key="regTitle">Registrar</h1>
     <form id="formRegistro">
-        <input type="text" id="nombre" placeholder="Nombre">
-        <input type="email" id="correo" placeholder="Correo Electronico">
-        <input type="password" id="contraseña" placeholder="Contraseña">
-        <button type="submit" id="send">Registrar</button>
+        <input type="text" id="nombre" data-key="ph_name" placeholder="Nombre">
+        <input type="email" id="correo" data-key="ph_mail" placeholder="Correo Electronico">
+        <input type="password" id="contraseña" data-key="ph_pass" placeholder="Contraseña">
+        <button type="submit" id="send" data-key="regTitle">Registrar</button>
     </form>
     <P id="mensaje"></P>
     <script src="../js/register.js"></script>
+    <script src="../js/generic.js"></script>
 </body>

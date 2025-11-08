@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title data-key="login">Login</title>
 </head>
 <body>
-    <h1>Login</h1>
+    <h1 data-key="login">Login</h1>
     <form id="formRegistro">
-        <input type="email" id="correo" placeholder="Correo Electronico">
-        <input type="password" id="contraseña" placeholder="Contraseña">
-        <button type="submit" id="send">Log-in</button>
+        <input type="email" id="correo" data-key="ph_mail" placeholder="Correo Electronico">
+        <input type="password" id="contraseña" data-key="ph_pass" placeholder="Contraseña">
+        <button type="submit" id="send" data-key="login">Log-in</button>
     </form>
     <P id="mensaje"></P>
     <script src="../js/login.js"></script>
+    <script src="../js/generic.js"></script>
 </body>
