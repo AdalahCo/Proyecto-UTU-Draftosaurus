@@ -15,29 +15,29 @@ class TableroDinosaurios {
   init() {
     this.generarDinosauriosAleatorios();
     this.cargarJugadas();
-    this.agregarEventosDrag();
     this.agregarEventosDrop();
     this.agregarEventoFinalizar();
   }
 
-  generarDinosauriosAleatorios() {
-    const contenedor = document.getElementById("dinos-container");
+generarDinosauriosAleatorios() {
+    const contenedor = document.querySelector(".dinos-container");
     contenedor.innerHTML = "";
 
     for (let i = 0; i < 6; i++) {
-      const randomIndex = Math.floor(Math.random() * this.listaDinos.length);
-      const dinoNombre = this.listaDinos[randomIndex];
-      const emoji = dinoNombre === "T-Rex" ? "🦖" : "🦕";
+        const randomIndex = Math.floor(Math.random() * this.listaDinos.length);
+        const dinoNombre = this.listaDinos[randomIndex];
+        const emoji = dinoNombre === "T-Rex" ? "🦖" : "🦕";
 
-      const dinoDiv = document.createElement("div");
-      dinoDiv.classList.add("dino");
-      dinoDiv.setAttribute("draggable", "true");
-      dinoDiv.dataset.dino = dinoNombre;
-      dinoDiv.textContent = `${emoji} ${dinoNombre}`;
+        const dinoDiv = document.createElement("div");
+        dinoDiv.classList.add("dino");
+        dinoDiv.setAttribute("draggable", "true");
+        dinoDiv.dataset.dino = dinoNombre;
+        dinoDiv.textContent = `${emoji} ${dinoNombre}`;
 
-      contenedor.appendChild(dinoDiv);
+        contenedor.appendChild(dinoDiv);
     }
-  }
+    this.agregarEventosDrag();
+}
 
   cargarJugadas() {
     if (this.jugadas.length > 0) {
