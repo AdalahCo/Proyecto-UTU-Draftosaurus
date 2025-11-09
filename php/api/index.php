@@ -48,14 +48,12 @@ if ($method === 'POST') {
         $password = $data['contraseña'];
         $userData = $user->login($gmail, $password);
 
-        if ($userData) {
+        if (isset($userData['success']) && $userData['success'] === true) {
             $_SESSION['user'] = $userData;
             echo json_encode(["success" => true, "user" => $userData]);
         } else {
-            echo json_encode(["error" => "Informacion incorrecta"]);
+            echo json_encode(["error" => $userData['error'] ?? "Información incorrecta"]);
         }
-    } else {
-        echo json_encode(["error" => "Faltan datos"]);
     }
 
 } elseif ($method === 'GET') {

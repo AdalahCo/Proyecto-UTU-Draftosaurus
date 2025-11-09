@@ -21,16 +21,11 @@ class User {
 
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // Si no existe el usuario o la contraseña no es la misma devuelve un vacio
-        //if (!$user || !password_verify($password, $user['contraseña'])) {
-        //    return null;
-        //}
-
-        //Mientras que las contraseñas no esten Hasheadas:
-        if (!$user || $user['contraseña'] !== $password) {
-            return null;
+        if ($user && password_verify($password, $user['contraseña'])) {
+            return ["success" => true, "nombre" => $user['nombre'], "gmail" => $user['gmail']];
+        } else {
+            return ["error" => "Correo o contraseña incorrectos"];
         }
-        return $user;
     }
 
     public function register($gmail, $nombre, $password) {
@@ -43,11 +38,13 @@ class User {
             return ["error" => "El correo ya esta registrado"];
         }
 
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
         $insert = "INSERT INTO {$this->table} (gmail, nombre, contraseña) VALUES (:gmail, :nombre, :password)";
         $stmt = $this->conn->prepare($insert);
         $stmt->bindParam(":gmail", $gmail);
         $stmt->bindParam(":nombre", $nombre);
-        $stmt->bindParam(":password", $password);
+        $stmt->bindParam(":password", $hashedPassword);
 
         if ($stmt->execute()) {
             return ["success" => true];
