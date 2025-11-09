@@ -1,0 +1,51 @@
+.bg{
+    background-image: url(../img/regbg.png);
+    background-position: center center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+#backarw{
+    position:absolute;
+    max-width: 7.5%;
+    top: 0;
+    left: 0;
+    padding: 5px;
+}
+#backarwSM{
+    position:absolute;
+    max-width: 15%;
+    top: 0;
+    left: 0;
+    padding: 5px;
+}
+.top{
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.form-container {
+  width: 100%;
+  max-width: 420px;
+}
+
+.form-container img.bg-overflow {
+  position: absolute;
+  margin-left: -5.75%;
+  margin-right: auto;
+  margin-top:-4%;
+  width: 35%;
+  height: 25%;
+  object-fit: cover;
+  z-index: -1;
+  border-radius: 30px;
+}
+
+.form-container img.bg-overflowSM {
+  position: absolute;
+  margin-left: -0.75%;
+  margin-top:-12%;
+  width: 100%;
+  height: 25%;
+  object-fit: cover;
+  z-index: -1;
+  border-radius: 30px;
+}
