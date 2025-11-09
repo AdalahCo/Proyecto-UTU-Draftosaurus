@@ -33,6 +33,7 @@ generarDinosauriosAleatorios() {
         dinoDiv.setAttribute("draggable", "true");
         dinoDiv.dataset.dino = dinoNombre;
         dinoDiv.textContent = `${emoji} ${dinoNombre}`;
+        dinoDiv.dataset.id = `dino-${i}-${Date.now()}`;
 
         contenedor.appendChild(dinoDiv);
     }
@@ -74,6 +75,7 @@ generarDinosauriosAleatorios() {
     document.querySelectorAll(".dino").forEach((dino) => {
       dino.addEventListener("dragstart", (e) => {
         e.dataTransfer.setData("text/plain", dino.dataset.dino);
+        e.dataTransfer.setData("id", dino.dataset.id);
       });
     });
   }
@@ -94,14 +96,19 @@ generarDinosauriosAleatorios() {
         ).length;
 
         if (cantidadActual < limite) {
-          const dino = e.dataTransfer.getData("text/plain");
           casilla.textContent += `\n🦕 ${dino}`;
 
           this.jugadas.push({
           casilla: idCasilla,
           dinosaurio: dino
         });
-          this.guardarJugadas();
+        
+        this.guardarJugadas();
+
+        const dinoId = e.dataTransfer.getData("id");
+        const dinoElemento = document.querySelector(`.dino[data-id="${dinoId}"]`);
+        if (dinoElemento) dinoElemento.remove();
+
         }
       });
     });
