@@ -134,20 +134,53 @@ class TableroDinosaurios {
     ? parseInt(localStorage.getItem("reposicionesRestantes"))
     : 6;
 
+    this.partidaId = null;
+
     this.init();
   }
 
   //init, simplemente corre todas las variables para empezar el juego
-  init() {
-    if (this.dinosActuales.length > 0) {
-      this.mostrarDinosGuardados();
-    } else {
-      this.generarDinosauriosAleatorios();
-    }
-    this.cargarJugadas();
-    this.agregarEventosDrop();
-    this.agregarEventoFinalizar();
-  }
+ init() {
+  fetch("../php/api/partida.php")
+    .then(res => res.json())
+    .then(data => {
+      if (data.success && data.partida) {
+        if (data.partida.estado === "finalizada") {
+          console.log("Partida finalizada, comenzando nueva partida.");
+          this.generarDinosauriosAleatorios();
+          this.agregarEventosDrop();
+          this.agregarEventoFinalizar();
+          return;
+        }
+
+        this.partidaId = data.partida.id;
+        this.jugadas = JSON.parse(data.partida.jugadas || "[]");
+        this.dinosActuales = JSON.parse(data.partida.dinosActuales || "[]");
+        if (data.partida.reposicionesRestantes !== null && !isNaN(data.partida.reposicionesRestantes)) {
+          this.reposicionesRestantes = parseInt(data.partida.reposicionesRestantes);
+        }
+        this.mostrarDinosGuardados();
+        this.cargarJugadas();
+      } else if (this.dinosActuales.length > 0) {
+        this.mostrarDinosGuardados();
+      } else {
+        this.generarDinosauriosAleatorios();
+      }
+
+      this.agregarEventosDrop();
+      this.agregarEventoFinalizar();
+    })
+    .catch(err => {
+      console.error("Error cargando partida:", err);
+      if (this.dinosActuales.length > 0) {
+        this.mostrarDinosGuardados();
+      } else {
+        this.generarDinosauriosAleatorios();
+      }
+      this.agregarEventosDrop();
+      this.agregarEventoFinalizar();
+    });
+}
 
   //tomo un rato, borre y reescribi el codigo unas cuantas veces hasta que encontre como hacerlo
    generarDinosauriosAleatorios() {
@@ -247,9 +280,22 @@ class TableroDinosaurios {
   }
 
   guardarJugadas() {
-    localStorage.setItem("jugadas", JSON.stringify(this.jugadas));
-    this.guardarEstadoDinos();
-    console.log("Jugadas:", this.jugadas);
+    fetch("../php/api/partida.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+        id: this.partidaId,
+        jugadas: this.jugadas,
+        dinosActuales: this.dinosActuales,
+        reposicionesRestantes: this.reposicionesRestantes
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (!this.partidaId && data.id) this.partidaId = data.id; // guardamos ID
+      console.log("Partida guardada:", data);
+    })
+    .catch(err => console.error("Error al guardar partida:", err));
   }
 
     //boton de finalizar temporal
@@ -262,6 +308,9 @@ class TableroDinosaurios {
       casilla.textContent = casilla.dataset.original;
       delete casilla.dataset.cargada;
     });
+
+    const contenedor = document.querySelector(".dinos-container");
+    if (contenedor) contenedor.innerHTML = "";
 
     this.jugadas = [];
     this.dinosActuales = [];
@@ -316,8 +365,6 @@ class TableroDinosaurios {
           dinosaurio: dino
         });
 
-        this.guardarJugadas();
-
         //datatransfer y todo eso es parte del dragstart event listener viene por defecto
         //simplemente obtiene y guarda el id del dinosaurio
         const dinoId = e.dataTransfer.getData("id");
@@ -331,6 +378,7 @@ class TableroDinosaurios {
           }
 
         this.reponerDinosaurio();
+        this.guardarJugadas();
         }
       });
     });
@@ -372,17 +420,39 @@ class TableroDinosaurios {
 
   console.log("Puntaje total:", total);
   return total;
-}
+  }
 
   agregarEventoFinalizar() {
-    document.getElementById("fin").addEventListener("click", () => {
-      const puntos = this.calcularPuntosTotales();
-      alert(`Puntaje final: ${puntos}`);
+  document.getElementById("fin").addEventListener("click", () => {
+    const puntos = this.calcularPuntosTotales();
+
+    fetch("../php/api/partida.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        id: this.partidaId,
+        jugadas: this.jugadas,
+        dinosActuales: this.dinosActuales,
+        reposicionesRestantes: this.reposicionesRestantes,
+        puntos: puntos,
+        estado: "finalizada"
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log("Partida finalizada guardada:", data);
+      
       this.resetearJugadas();
-      //recarga el sitio
+      window.location.href = "result.html";
+    })
+    .catch(err => {
+      console.error("Error al guardar partida finalizada:", err);
+      alert(`Error al guardar partida. Puntos: ${puntos}`);
+      this.resetearJugadas();
       location.reload();
     });
-  }
+  });
+}
 }
 
 new TableroDinosaurios();

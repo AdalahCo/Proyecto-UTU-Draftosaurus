@@ -8,6 +8,19 @@ CREATE TABLE Users (
     lang varchar(20)
 );
 
+CREATE TABLE partidas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    gmail VARCHAR(100) NOT NULL,
+    jugadas JSON,
+    dinosActuales JSON,
+    reposicionesRestantes INT DEFAULT 6,
+    puntos INT DEFAULT 0,
+    horaActual TIME DEFAULT CURRENT_TIME,
+    horaFinalizacion TIME,
+    estado VARCHAR(20) DEFAULT 'en curso',
+    FOREIGN KEY (gmail) REFERENCES Users(gmail)
+);
+
 INSERT INTO Users (gmail, nombre, contraseña) VALUES
     ('AdalahBrowser@gmail.com', 'Admin', '$$2y$10$vgihVIHkLBCjAGD94Db7rudwETeFjzVZdb9MgDpgjS8NqIPkBRjSS'), /*ProyectoUTU2025*/
     ('Test@gmail.com', 'User', '$2y$10$5p6Pb/NfJ65/jlqcnpxFROQzr2nSC5XC9QsZVVfmxPJU8BprNP91W') /*12345*/

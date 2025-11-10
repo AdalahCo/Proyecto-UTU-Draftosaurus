@@ -11,7 +11,7 @@ class User {
         $this->conn = $db;
     }
 
-    // Método para obtener un animal específico por su ID
+    // Método para obtener un usuario específico por su ID
     public function login($gmail, $password) {
         $query = "SELECT gmail, nombre, contraseña, lang FROM {$this->table} WHERE gmail = :gmail";
         

@@ -11,7 +11,7 @@ header("Access-Control-Allow-Origin: *");
 // Incluye el archivo Database.php, que contiene la clase para la conexión a la base de datos
 require_once "database.php";
 
-// Incluye el archivo Animal.php, que contiene la clase para manejar los animales
+// Incluye el archivo User.php, que contiene la clase para manejar los usuarios
 require_once "user.php";
 
 // Crea una nueva instancia de la clase Database
@@ -20,7 +20,7 @@ $database = new Database();
 // Llama al método connect() para obtener la conexión a la base de datos y la guarda en $db
 $db = $database->connect();
 
-// Crea una nueva instancia de la clase Animal, pasándole la conexión a la base de datos
+// Crea una nueva instancia de la clase User, pasándole la conexión a la base de datos
 $user = new User($db);
 
 // Obtiene el método HTTP de la petición (por ejemplo, GET, POST, etc.)
