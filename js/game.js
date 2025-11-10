@@ -9,6 +9,7 @@ class TableroDinosaurios {
       "Spinosaurio",
       "Anquilosaurio"
     ];
+    this.reposicionesRestantes = 6;
     this.init();
   }
 
@@ -19,23 +20,12 @@ class TableroDinosaurios {
     this.agregarEventoFinalizar();
   }
 
-generarDinosauriosAleatorios() {
+   generarDinosauriosAleatorios() {
     const contenedor = document.querySelector(".dinos-container");
     contenedor.innerHTML = "";
 
     for (let i = 0; i < 6; i++) {
-        const randomIndex = Math.floor(Math.random() * this.listaDinos.length);
-        const dinoNombre = this.listaDinos[randomIndex];
-        const emoji = dinoNombre === "T-Rex" ? "🦖" : "🦕";
-
-        const dinoDiv = document.createElement("div");
-        dinoDiv.classList.add("dino");
-        dinoDiv.setAttribute("draggable", "true");
-        dinoDiv.dataset.dino = dinoNombre;
-        dinoDiv.textContent = `${emoji} ${dinoNombre}`;
-        dinoDiv.dataset.id = `dino-${i}-${Date.now()}`;
-
-        contenedor.appendChild(dinoDiv);
+      this.crearDinosaurio(contenedor);
     }
     this.agregarEventosDrag();
 }
@@ -54,6 +44,33 @@ generarDinosauriosAleatorios() {
         casilla.textContent += `🦕 ${jugada.dinosaurio}\n`;
         }
       });
+    }
+  }
+
+ crearDinosaurio(contenedor) {
+    const randomIndex = Math.floor(Math.random() * this.listaDinos.length);
+    const dinoNombre = this.listaDinos[randomIndex];
+    const emoji = dinoNombre === "T-Rex" ? "🦖" : "🦕";
+
+    const dinoDiv = document.createElement("div");
+    dinoDiv.classList.add("dino");
+    dinoDiv.setAttribute("draggable", "true");
+    dinoDiv.dataset.dino = dinoNombre;
+    dinoDiv.dataset.id = `dino-${Math.random().toString(36).substring(2, 9)}`;
+    dinoDiv.textContent = `${emoji} ${dinoNombre}`;
+
+    contenedor.appendChild(dinoDiv);
+  }
+
+  reponerDinosaurio() {
+    if (this.reposicionesRestantes > 0) {
+      const contenedor = document.querySelector(".dinos-container");
+      this.crearDinosaurio(contenedor);
+      this.agregarEventosDrag();
+      this.reposicionesRestantes--;
+      console.log("Reposición! Restan:", this.reposicionesRestantes);
+    } else {
+      console.log("No quedan más dinosaurios para reponer.");
     }
   }
 
@@ -102,13 +119,14 @@ generarDinosauriosAleatorios() {
           casilla: idCasilla,
           dinosaurio: dino
         });
-        
+
         this.guardarJugadas();
 
         const dinoId = e.dataTransfer.getData("id");
         const dinoElemento = document.querySelector(`.dino[data-id="${dinoId}"]`);
         if (dinoElemento) dinoElemento.remove();
 
+        this.reponerDinosaurio();
         }
       });
     });
