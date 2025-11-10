@@ -136,6 +136,10 @@ class TableroDinosaurios {
 
     this.partidaId = null;
 
+    // detecta si es touchpad
+    this.isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    this.dinoSeleccionado = null;
+
     this.init();
   }
 
@@ -318,17 +322,69 @@ class TableroDinosaurios {
   }
 
   agregarEventosDrag() {
-    document.querySelectorAll(".dino").forEach((dino) => {
-      dino.addEventListener("dragstart", (e) => {
-        e.dataTransfer.setData("text/plain", dino.dataset.dino);
-        e.dataTransfer.setData("id", dino.dataset.id);
-      });
-    });
-  }
+    if (this.isTouchDevice) {
+        // en dispositivos touch usan click para seleccionar
+        document.querySelectorAll(".dino").forEach(dino => {
+            dino.addEventListener("click", () => {
+                this.dinoSeleccionado = dino;
+                // indicacion visual
+                document.querySelectorAll(".dino").forEach(d => d.classList.remove("selected"));
+                dino.classList.add("selected");
+            });
+        });
+        } else {
+            // drag & drop de desktop
+            document.querySelectorAll(".dino").forEach(dino => {
+                dino.addEventListener("dragstart", (e) => {
+                    e.dataTransfer.setData("text/plain", dino.dataset.dino);
+                    e.dataTransfer.setData("id", dino.dataset.id);
+                });
+            });
+        }
+    }
 
   //esto fue una pesidilla para lidiar con
   agregarEventosDrop() {
     document.querySelectorAll(".casilla").forEach((casilla) => {
+
+      if (this.isTouchDevice) {
+            // touch
+            casilla.addEventListener("click", () => {
+                if (!this.dinoSeleccionado) return;
+
+                const dinoNombre = this.dinoSeleccionado.dataset.dino;
+                const idCasilla = casilla.dataset.casilla;
+                const regla = this.reglasCasillas[idCasilla];
+                const jugadasEnCasilla = this.jugadas.filter(j => j.casilla === idCasilla);
+
+                // verificacio de restricciones
+                if (regla && !regla.restriccion(jugadasEnCasilla, dinoNombre)) {
+                    alert(`No puedes colocar ese dinosaurio en ${casilla.dataset.original}.`);
+                    return;
+                }
+
+                const limite = parseInt(casilla.dataset.limite) || 1;
+                const cantidadActual = this.jugadas.filter(j => j.casilla === idCasilla).length;
+
+                if (cantidadActual < limite) {
+                    casilla.textContent += `\n🦕 ${dinoNombre}`;
+                    this.jugadas.push({ casilla: idCasilla, dinosaurio: dinoNombre });
+
+                    // remover dinosaurio del contenedor
+                    const dinoId = this.dinoSeleccionado.dataset.id;
+                    this.dinoSeleccionado.remove();
+                    this.dinosActuales = this.dinosActuales.filter(d => d.id !== dinoId);
+                    this.guardarEstadoDinos();
+
+                    // reponer y guardar
+                    this.reponerDinosaurio();
+                    this.guardarJugadas();
+
+                    this.dinoSeleccionado = null; // deseleccionar
+                }
+            });
+        } else {
+
       casilla.addEventListener("dragover", (e) => e.preventDefault());
       
       casilla.addEventListener("drop", (e) => {
@@ -380,9 +436,10 @@ class TableroDinosaurios {
         this.reponerDinosaurio();
         this.guardarJugadas();
         }
-      });
     });
-  }
+    }
+    });
+}
 
   //funcion que eventualmente se va a mandar a la pagina de puntos
   calcularPuntosTotales() {
