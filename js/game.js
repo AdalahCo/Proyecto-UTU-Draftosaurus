@@ -10,6 +10,123 @@ class TableroDinosaurios {
       "Spinosaurio",
       "Anquilosaurio"
     ];
+
+    this.reglasCasillas = {
+        1: {nombre: "Bosque de Semejanza",
+            puntos: (jugadasCasilla) => {
+            let ret;
+            switch (jugadasCasilla.length) {
+                case 1: ret = 2;
+                break;
+                case 2: ret = 4;
+                break;
+                case 3: ret = 8;
+                break;
+                case 4: ret = 12;
+                break;
+                case 5: ret = 18;
+                break;
+                case 6: ret = 24;
+                break;
+            }
+            return ret;
+            },
+            restriccion: (jugadasCasilla, nuevoDino) => {
+            // solo dinos iguales después del primero
+            // every devuelve verdadero si todos los elementos de un array cumplen con la condicion y falso
+            // si siquiera uno lo rompe
+            return (
+                jugadasCasilla.length === 0 ||
+                jugadasCasilla.every((j) => j.dinosaurio === nuevoDino)
+            );
+            }
+        },
+        2: {nombre: "Trío Frondoso",
+            puntos: (jugadasCasilla) => (jugadasCasilla.length === 3 ? 7 : 0),
+            //bypass ya que no hay restricciones, sin restriccion no se dejan aplicar dinosaurios a
+            restriccion: () => true
+        },
+        3: { nombre: "Valle de las Parejas",
+        puntos: (jugadasCasilla) => {
+            // cuenta las parejas
+            // es un contador por cada tipo de dinosaurio
+            // si este llega a 2 es usado en los puntos via math.floor
+            // ya que estoy, math.floor simplemente saca la coma, si es 2,#, osea dos coma algo
+            // esto se volveria 2
+            const contador = {};
+            jugadasCasilla.forEach((j) => {
+            contador[j.dinosaurio] = (contador[j.dinosaurio] || 0) + 1;
+            });
+            let puntos = 0;
+            // cada pareja da 5 puntos
+            // no lo llego a entender muy bien pero funciona
+            // la base es que cuenta los elementos dentro del array y guarda
+            // su nombre en la constante especie, de esta manera llendo por todas las especies en
+            // el contador
+            for (const especie in contador) {
+            puntos += Math.floor(contador[especie] / 2) * 5;
+            }
+            return puntos;
+        },
+        restriccion: () => true
+        },
+        4: {nombre: "Rey de la Selva",
+            puntos: (jugadasCasilla) => (jugadasCasilla.length === 1 ? 7 : 0),
+            restriccion: () => true
+            // ya que solo hay un tablero por ahora, no hay logica para el rey de la selva ya que
+            // siempre tendrias la mayor cantidad de cada dinosaurio.
+        },
+        5: { nombre: "Territorio Diverso",
+        puntos: (jugadasCasilla) => {
+            let ret;
+            switch (jugadasCasilla.length) {
+                case 1: ret = 1;
+                break;
+                case 2: ret = 3;
+                break;
+                case 3: ret = 6;
+                break;
+                case 4: ret = 10;
+                break;
+                case 5: ret = 15;
+                break;
+                case 6: ret = 21;
+                break;
+            }
+            return ret;
+        },
+        restriccion: (jugadasCasilla, nuevoDino) => {
+            // no puede haber dos del mismo tipo
+            // lo que hace .some es como .filter, pero para cuando encuentra uno de lo que esta buscando
+            return !jugadasCasilla.some((j) => j.dinosaurio === nuevoDino);
+        }
+        },
+        6: {
+            nombre: "Isla Solitaria",
+            puntos: (jugadasCasilla, todasJugadas) => {
+                // revisa si es el unico con un filter
+                let puntos = 0;
+                jugadasCasilla.forEach((j) => {
+                const mismos = todasJugadas.filter(
+                    (otra) => otra.dinosaurio === j.dinosaurio
+                );
+                if (mismos.length === 1) {
+                    puntos += 7;
+                }
+                });
+                return puntos;
+            },
+        restriccion: () => true,
+        },
+
+        7: {
+            nombre: "Río",
+            // un punto por dinosaurio
+            puntos: (jugadasCasilla) => jugadasCasilla.length * 1,
+            restriccion: () => true,
+        },
+    };
+
     this.dinosActuales = JSON.parse(localStorage.getItem("dinosActuales")) || [];
     
     //esto es para que me acuerde yo, esto es como un if, la estructura es asi. condition ? valueIfTrue : valueIfFalse
@@ -20,6 +137,7 @@ class TableroDinosaurios {
     this.init();
   }
 
+  //init, simplemente corre todas las variables para empezar el juego
   init() {
     if (this.dinosActuales.length > 0) {
       this.mostrarDinosGuardados();
@@ -169,6 +287,18 @@ class TableroDinosaurios {
         
         const dino = e.dataTransfer.getData("text/plain");
         const idCasilla = casilla.dataset.casilla;
+        //consigue la restriccion
+        const regla = this.reglasCasillas[idCasilla];
+
+        //mas filtros
+        const jugadasEnCasilla = this.jugadas.filter((j) => j.casilla === idCasilla);
+
+        //verificacion para restricciones
+        if (regla && !regla.restriccion(jugadasEnCasilla, dino)) {
+        alert(`No puedes colocar ese dinosaurio en ${casilla.dataset.original}.`);
+        return;
+        }
+
         const limite = parseInt(casilla.dataset.limite) || 1;
         
         //mi mas humilde manera de encontrar cuantos dinosaurios hay en la casilla. filter filtra
@@ -206,9 +336,50 @@ class TableroDinosaurios {
     });
   }
 
+  //funcion que eventualmente se va a mandar a la pagina de puntos
+  calcularPuntosTotales() {
+    let total = 0;
+    // lo mismo que en el resinto o casilla 3, pradera de amor
+    // crea una id por cada elemento en this.reglasCasillas y le corre un filtro de id
+    // simplemente encuentra las jugadas en esa casilla
+    // y obtiene la regla, la cual es usada en el siguiente if
+    for (const id in this.reglasCasillas) {
+        const jugadasCasilla = this.jugadas.filter(j => j.casilla === id);
+        const regla = this.reglasCasillas[id];
+
+        // si no hubo ninuna jugada en la casilla o resinto, se descarta
+        // checkea si tiene una id en la tabla de reglas para que no se me rompa el codigo por las dudas
+        // se asegura que esta tenga una funcion llamada puntos, de lo cual es el "typeof"
+        // esto es porque mientras que estaba haciendo el codigo me vino conveniente ya que
+        // no habia construido todos los sets para obtener puntos
+        if (jugadasCasilla.length > 0 && regla && typeof regla.puntos === "function") {
+            // si la funcion de puntos puede tener 2 parametros (osea que sea compleja) se pasan las jugadas
+            // si las jugadas no son necesitadas, no se llaman, por ejemplo con el rio.
+            if (regla.puntos.length > 1) {
+                total += regla.puntos(jugadasCasilla, this.jugadas);
+            } else {
+                total += regla.puntos(jugadasCasilla);
+            }
+        }
+
+        // T-REX
+        const tieneTRex = jugadasCasilla.some(j => j.dinosaurio === "T-Rex");
+        // 7 es el rio, no suma el T-rex en el rio
+        if (tieneTRex && id !== "7") {
+        total += 1;
+        }
+    }
+
+  console.log("Puntaje total:", total);
+  return total;
+}
+
   agregarEventoFinalizar() {
     document.getElementById("fin").addEventListener("click", () => {
+      const puntos = this.calcularPuntosTotales();
+      alert(`Puntaje final: ${puntos}`);
       this.resetearJugadas();
+      //recarga el sitio
       location.reload();
     });
   }
